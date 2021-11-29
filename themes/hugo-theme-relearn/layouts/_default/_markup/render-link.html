@@ -1,0 +1,54 @@
+<!--
+
+the urls.Pars Function returns a URL struct 
+For  https://zwbetz.com/make-a-hugo-blog-from-scratch/#wrap-up
+it delivers the following values
+
+Field	       Value
+--------------+-----------------------------------------
+$url.Scheme   | https
+$url.Host	  | zwbetz.com
+$url.Path	  | /make-a-hugo-blog-from-scratch/
+$url.Fragment | wrap-up
+
+Further the code is using the following variables: 
+
+.Destination: 
+   The content of *.md formatted Hyperlink in the rounded bracket [Text](../link.md#section)
+
+-->
+
+{{ $link := .Destination }}
+
+{{ $isRemote := strings.HasPrefix $link "http" }}
+
+{{ if not $isRemote }}
+    {{ $url := urls.Parse .Destination }} 
+    
+    {{ if $url.Path }}
+        <!-- #-Anker handling -->
+        {{ $fragment := "" }}
+
+        {{ with $url.Fragment }}
+            {{ $fragment = printf "#%s" . }}
+        {{ end -}}
+    
+        <!-- Concatenate the given in RelPermalink with the #-Anker-tag -->
+        {{ with .Page.GetPage $url.Path }}
+            <p>RelPermalink = {{ .RelPermalink }}</p>         
+            {{ $link = printf "%s%s" .RelPermalink $fragment }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+<a href="{{ $link | safeURL }}"
+    {{ with .Title}}
+        title="{{ . }}"
+    {{ end }}
+
+    {{ if $isRemote }}
+         target="_blank"
+    {{ end }}
+>
+    {{ .Text | safeHTML }}
+</a>
