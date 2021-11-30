@@ -1,3 +1,33 @@
+          <!--
+            This particle defines the LOGO above the NavTree on the left side of the screen
+            The logo is rendered as an inline SVG-graphics that looks like a set of puzzles. 
+            The following PARAMETERS are set here: 
+            
+            1. Home-URL
+            The URL where the navigation shall go when clicked on the Logo/Icon. 
+            This value is read from the config.toml from the following section: 
+            [Languages]
+              [Languages.en]
+                landingPageURL = "/"
+
+            Note here, that that the Home-URL can be set differently according to language    
+            When not defined in the config.toml then then "/" is assumed as default URL
+          -->
+          
+          <!--
+            relLangURL: 
+            This Hugo-function-pipe takes the given in URL and adds the relative URL-path 
+            according to the correct language prefix for multilingual sites. 
+
+            Example: 
+            For a site baseURL set to https://example.com/hugo/ and the current language = "en":
+             
+                {{ "blog/" | relLangURL }} 
+              
+              creates the following string
+              
+                "/hugo/en/blog/"
+          -->
           <a id="logo"
             href="{{ .Site.Params.landingPageURL | default "/" | relLangURL }}"
             style="

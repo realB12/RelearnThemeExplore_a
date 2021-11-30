@@ -41,9 +41,21 @@ relativeURLs = true
   [Languages.en]
     title = "Documentation for Hugo Relearn Theme"
     weight = 1
+
     languageName = "English"
+
+    # Home-URL
+    #        The URL where the navigation shall go when clicked on the Logo/Icon. 
+    #        This value is read from the config.toml from the following section: 
+    #        [Languages]
+    #          [Languages.en]
+    #            landingPageURL = "/"
+    #
+    #        Note here, that that the Home-URL can be set differently according to language    
+    #        When not defined in the config.toml then then "/" is assumed as default URL
     landingPageURL = "/"
-    landingPageName = "<i class='fas fa-home'></i> Home"
+ 
+   landingPageName = "<i class='fas fa-home'></i> Home"
 
   [[Languages.en.menu.shortcuts]]
     name = "<i class='fab fa-fw fa-github'></i> GitHub repo"
