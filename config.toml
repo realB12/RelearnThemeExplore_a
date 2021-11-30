@@ -11,8 +11,13 @@ relativeURLs = true
 [params]
   editURL = "https://github.com/McShelby/hugo-theme-relearn/edit/main/exampleSite/content/"
   description = "Documentation for Hugo Relearn Theme"
-  author = "Sören Weber"
+  author = "René Baron"
+
+  # showVisitedLinks Links-Param is used in the _layouts/partials/menu-html file where the menu is rendered
+  # on = display visited menu entries. 
+  # you might toggle them off again wiht a click on the "cancel history" button at the end of the treeview. 
   showVisitedLinks = true
+
   disableBreadcrumb = false
   disableNextPrev = false
   disableLandingPageButton = true

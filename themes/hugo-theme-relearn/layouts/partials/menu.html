@@ -1,12 +1,35 @@
 
+    <!-- _layouts/partials/menu-html
+    
+      ## used by
+
+    -->
+
     <script>
+      /* just setting some varaibles */
       var index_url={{ "index.json" | relLangURL }};
       var root_url="/";
       var baseUri=root_url.replace(/\/$/, '');
     </script>
+
+
+    <!-- 
+      showVisitedLinks is set in the config.toml as:  
+
+        [params]
+           showVisitedLinks = true
+
+      on = display visited menu entries. 
+
+      You might toggle them off again wiht a click on the "cancel history" button at the end of the treeview.
+      Display or non-display of the check-icon is handled with different classes for shwoing and hiding. 
+    -->
     <nav id="sidebar" class="{{ if $.Site.Params.showVisitedLinks }}showVisitedLinks{{ end }}">
+
       {{- $currentNode := . }}
+      
       {{- $showvisitedlinks := .Site.Params.showVisitedLinks }}
+      
       <div id="header-wrapper">
         <div id="header">
 {{ partial "logo.html" . }}
