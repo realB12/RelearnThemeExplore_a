@@ -30,8 +30,14 @@ relativeURLs = true
   # below the logo
   disableSearch = false
 
+  ## Whether or not a click on the logo will navigate back to the homepage (= false) or not (= true)
+  ## The language-specific Home URL is set below in the language settings.
+  disableLandingPageButton = false
+
 [outputs]
-  home = ["HTML", "RSS", "JSON"] # add JSON to the home page to support lunr search
+  # JSON Output is only required for the locally installed Lunr-Search-index. 
+  # When you switch to an alternative Searchengeine - such as Algolia - make sure JSON is removed from the list!
+  home = ["HTML", "RSS", "JSON"] 
 
 [markup]
   [markup.highlight]

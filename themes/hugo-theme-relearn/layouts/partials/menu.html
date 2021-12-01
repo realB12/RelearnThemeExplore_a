@@ -3,6 +3,11 @@
 
       ## used by
 
+      1. Displays Logo+ClaimText to be used as Homebutton
+      2. Activates the Searchbox
+      3. Generates the SideBarNavigation
+
+      Many parameters can be set in the config toml. Find the details in the code below. 
     -->
 
     <script>
@@ -13,7 +18,7 @@
     </script>
 
 
-    <!--
+    <!-- Visited Links
       showVisitedLinks is set in the config.toml as:
 
         [params]
@@ -38,15 +43,34 @@
           {{ partial "logo.html" . }}
         </div>
 
-        <!--
+        <!-- SearchBox:
           Displays the Lunr Searchbox between Logo and Navi-Sidbar
+          The Searchbox can be deactivated in the config toml with
+
+            [params]
+                disableSearch = false
         -->
         {{- if not .Site.Params.disableSearch }}
-
           {{ partial "search.html" . }}
         {{- end }}
       </div>
 
+      <!-- Homepage configuration
+      Whether or not clicking on the Logo will navigate back to the language specific homepage:
+
+      Config.toml configuration in this regard is two fold:
+
+      1. whether or not the HomeLink is activated at all
+
+        [params]
+            disableLandingPageButton = false # toggles the link on/off
+
+      2. Setting the URL for the specific language
+
+        [Languages]
+        [Languages.en]
+          landingPageURL = "/"
+      -->
       {{- if not .Site.Params.disableLandingPageButton }}
       <div id="homelinks">
         <ul>
@@ -56,6 +80,8 @@
         </ul>
       </div>
       {{- end }}
+
+
       <div class="highlightable">
         <ul class="topics">
           {{- $defaultOrdersectionsby := .Site.Params.ordersectionsby | default "weight" }}
