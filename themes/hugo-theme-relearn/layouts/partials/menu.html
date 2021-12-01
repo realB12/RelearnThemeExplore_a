@@ -6,8 +6,9 @@
       1. Displays Logo+ClaimText to be used as Homebutton
       2. Activates the Searchbox
       3. Generates the SideBarNavigation
+      4. Flags already visited links
 
-      Many parameters can be set in the config toml. Find the details in the code below. 
+      Many parameters can be set in the config toml. Find the details in the code below.
     -->
 
     <script>
@@ -89,24 +90,34 @@
           {{- $defaultAlwaysopen := .Site.Params.alwaysopen | default false }}
           {{- if eq $currentOrdersectionsby "title" }}
             {{- range .Site.Home.Sections.ByTitle }}
-            {{- template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks "alwaysopen" $defaultAlwaysopen }}
+              {{- template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks "alwaysopen" $defaultAlwaysopen }}
             {{- end }}
           {{- else }}
             {{- range .Site.Home.Sections.ByWeight }}
-            {{- template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks "alwaysopen" $defaultAlwaysopen }}
+              {{- template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks "alwaysopen" $defaultAlwaysopen }}
             {{- end }}
           {{- end }}
         </ul>
+
+        <!-- ShortCutTitle
+          ShortCutTitle is the Title above the ShortCut-Icons for GitHub, Showcases, Credits, Tags, etc.
+          Default TitleText = "More"
+        -->
         {{- $disableShortcutsTitle := .Site.Params.DisableShortcutsTitle }}
+
         {{- with .Site.Menus.shortcuts }}
-        <div id="shortcuts">
-          <div class="nav-title">{{ if not $disableShortcutsTitle }}{{ T "Shortcuts-Title" }}{{ end }}</div>
-          <ul>
-            {{- range sort . "Weight" }}
-            <li>{{ .Pre }}<a class="padding" href="{{ .URL | relLangURL }}">{{ safeHTML .Name }}</a>{{ .Post }}</li>
-            {{- end }}
-          </ul>
-        </div>
+          <div id="shortcuts">
+           <div class="nav-title">
+             {{ if not $disableShortcutsTitle }}
+                {{ T "Shortcuts-Title" }}
+             {{ end }}
+            </div>
+            <ul>
+              {{- range sort . "Weight" }}
+               <li>{{ .Pre }}<a class="padding" href="{{ .URL | relLangURL }}">{{ safeHTML .Name }}</a>{{ .Post }}</li>
+              {{- end }}
+           </ul>
+          </div>
         {{- end }}
 
         {{- if or .Site.IsMultiLingual $showvisitedlinks }}
