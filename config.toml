@@ -9,40 +9,83 @@ theme = "hugo-theme-relearn"
 relativeURLs = true
 
 [params]
+
+  # Prefix URL to edit current page. Will display an "Edit this page" button on top right hand corner of every page.
+  # Useful to give opportunity to people to create merge request for your doc.
+  # See the config.toml file from this documentation site to have an example.
   editURL = "https://github.com/McShelby/hugo-theme-relearn/edit/main/exampleSite/content/"
+
+  # Description of the site, will be used in meta information
   description = "Documentation for Hugo Relearn Theme"
+
+  # Author of the site, will be used in meta information
   author = "René Baron"
 
+  # When using mulitlingual website, disables the switch language button.
   # Currently we are english only. When adding German, set the flag to "false"
   # When false, the language switching button will dissappear from the sidebar.
   disableLanguageSwitchingButton = true
 
+  # Shows a checkmark for visited pages on the menu
   # showVisitedLinks Links-Param is used in the _layouts/partials/menu-html file where the menu is rendered
   # on = display visited menu entries. 
   # you might toggle them off again wiht a click on the "cancel history" button at the end of the treeview. 
   showVisitedLinks = true
 
+  # Hide breadcrumbs in the header and only show the current page title
   disableBreadcrumb = false
+
+  # Hide Next and Previous page buttons normally displayed full height beside content
   disableNextPrev = false
+
+  # If set to false, a Home button will appear below the search bar on the menu.
+  # It is redirecting to the landing page of the current language if specified. (Default is "/")
   disableLandingPageButton = true
+
+  # If set to true, prevents Hugo from including the mermaid module if not needed 
+  # this will reduce load times and traffic
   disableMermaid = false
+
+  # Specifies the remote location of the mermaid js
+  # customMermaidURL = "https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"
+  
+  # Provide a list of custom css files to load relative from the `static/` folder in the site root.
+  # custom_css = ["css/foo.css", "css/bar.css"]
+
+  # Change the title separator. Default to "::".
   titleSeparator = "::"
+
+  # Change default color scheme with a variant one. 
+  # Can be "red", "blue", "green" or "relearn".
   themeVariant = "relearn"
+
   disableSeoHiddenPages = false
 
+
+  # Set this to true to disable copy-to-clipboard button for inline code.
+  disableInlineCopyToClipBoard = false
+
+  # Disable search function. It will hide the search box.
   # disableSearch is used in the menu to activate (= true) / dectivate (= false) the Search box
   # below the logo
   disableSearch = false
 
-  ## Whether or not a click on the logo will navigate back to the homepage (= false) or not (= true)
-  ## The language-specific Home URL is set below in the language settings.
+  # Javascript and CSS cache are automatically busted when new version of site is generated.
+  # Set this to true to disable this behavior (some proxies don't handle well this optimization)
+  disableAssetsBusting = false
+  
+  # Whether or not a click on the logo will navigate back to the homepage (= false) or not (= true)
+  # The language-specific Home URL is set below in the language settings.
   disableLandingPageButton = false
 
+
   # ShortCutTitle is the Title above the ShortCut-Icons for GitHub, Showcases, Credits, Tags, etc. 
-  # Default TitleText = "More"	
+  # Default TitleText = "More". This is set in the menu.html partial that takes the text from 
+  # i18n/en.toml lookup/translation file. 
   DisableShortcutsTitle = false
-
-
+ 
+  # Order sections in menu-tree by "weight" or "title". Default to "weight"
+  ordersectionsby = "weight"
 
 [outputs]
   # JSON Output is only required for the locally installed Lunr-Search-index. 

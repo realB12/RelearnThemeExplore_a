@@ -3,10 +3,15 @@
 
       ## used by
 
+      From top to down this partial renders the following elementes
+
       1. Displays Logo+ClaimText to be used as Homebutton
-      2. Activates the Searchbox
-      3. Generates the SideBarNavigation
-      4. Flags already visited links
+      2. A Searchbox
+      3. SideBarNavigation-Tree wiht flags for already visited links
+      4. Titel for ShortCuts and the list of ShortCut-Links
+      5. Buttons for Language Switching
+      6. Footer Text
+
 
       Many parameters can be set in the config toml. Find the details in the code below.
     -->
@@ -82,7 +87,9 @@
       </div>
       {{- end }}
 
-
+      <!-- MenuTree Generation
+        This function is called above.
+      -->
       <div class="highlightable">
         <ul class="topics">
           {{- $defaultOrdersectionsby := .Site.Params.ordersectionsby | default "weight" }}
@@ -90,10 +97,12 @@
           {{- $defaultAlwaysopen := .Site.Params.alwaysopen | default false }}
           {{- if eq $currentOrdersectionsby "title" }}
             {{- range .Site.Home.Sections.ByTitle }}
+              <!-- section-tree-nav rendering is defined below -->
               {{- template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks "alwaysopen" $defaultAlwaysopen }}
             {{- end }}
           {{- else }}
             {{- range .Site.Home.Sections.ByWeight }}
+              <!-- section-tree-nav rendering is defined below -->
               {{- template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks "alwaysopen" $defaultAlwaysopen }}
             {{- end }}
           {{- end }}
@@ -101,14 +110,16 @@
 
         <!-- ShortCutTitle
           ShortCutTitle is the Title above the ShortCut-Icons for GitHub, Showcases, Credits, Tags, etc.
-          Default TitleText = "More"
+          Default TitleText = "More" (as being looked up from the i18n/en.toml)
         -->
         {{- $disableShortcutsTitle := .Site.Params.DisableShortcutsTitle }}
 
+        <!-- Rendering the FontAwesome Shortcut Icons with Links to often used exernal and internal pages -->
         {{- with .Site.Menus.shortcuts }}
           <div id="shortcuts">
            <div class="nav-title">
              {{ if not $disableShortcutsTitle }}
+                <!-- getting the title from the i18n/en.toml which is currently defined as "More" -->
                 {{ T "Shortcuts-Title" }}
              {{ end }}
             </div>
@@ -120,6 +131,7 @@
           </div>
         {{- end }}
 
+        <!-- Rendering the Buttons for switching the language - currently not used -->
         {{- if or .Site.IsMultiLingual $showvisitedlinks }}
         <div id="prefooter">
           <hr/>
@@ -164,11 +176,17 @@
           </ul>
         </div>
         {{- end }}
+
+        <!-- SideBar-Navigation-Menu Footer -->
         <div id="footer">
+
+          <!--  Just displaying a single line with some Text, Links and FontAwesome icons -->
           {{- partial "menu-footer.html" . }}
         </div>
       </div>
     </nav>
+
+    <!--vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv-->
     {{- define "section-tree-nav" }}
       {{- $showvisitedlinks := .showvisitedlinks }}
       {{- $currentNode := .currentnode }}
