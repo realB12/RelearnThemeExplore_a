@@ -24,7 +24,11 @@ relativeURLs = true
   disableMermaid = false
   titleSeparator = "::"
   themeVariant = "relearn"
-  disableSeoHiddenPages = true
+  disableSeoHiddenPages = false
+
+  # disableSearch is used in the menu to activate (= true) / dectivate (= false) the Search box
+  # below the logo
+  disableSearch = false
 
 [outputs]
   home = ["HTML", "RSS", "JSON"] # add JSON to the home page to support lunr search

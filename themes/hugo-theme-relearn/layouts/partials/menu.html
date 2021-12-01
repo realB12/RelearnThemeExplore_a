@@ -1,6 +1,6 @@
 
     <!-- _layouts/partials/menu-html
-    
+
       ## used by
 
     -->
@@ -13,31 +13,40 @@
     </script>
 
 
-    <!-- 
-      showVisitedLinks is set in the config.toml as:  
+    <!--
+      showVisitedLinks is set in the config.toml as:
 
         [params]
            showVisitedLinks = true
 
-      on = display visited menu entries. 
+      on = display visited menu entries.
 
       You might toggle them off again wiht a click on the "cancel history" button at the end of the treeview.
-      Display or non-display of the check-icon is handled with different classes for shwoing and hiding. 
+      Display or non-display of the check-icon is handled with different classes for shwoing and hiding.
     -->
     <nav id="sidebar" class="{{ if $.Site.Params.showVisitedLinks }}showVisitedLinks{{ end }}">
 
       {{- $currentNode := . }}
-      
+
       {{- $showvisitedlinks := .Site.Params.showVisitedLinks }}
-      
+
       <div id="header-wrapper">
         <div id="header">
-{{ partial "logo.html" . }}
+          <!--
+            Displays the SVG generated Logo and a TextClaim above the SearchBox and Navi-Sidebar
+          -->
+          {{ partial "logo.html" . }}
         </div>
+
+        <!--
+          Displays the Lunr Searchbox between Logo and Navi-Sidbar
+        -->
         {{- if not .Site.Params.disableSearch }}
-{{ partial "search.html" . }}
+
+          {{ partial "search.html" . }}
         {{- end }}
       </div>
+
       {{- if not .Site.Params.disableLandingPageButton }}
       <div id="homelinks">
         <ul>
