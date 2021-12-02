@@ -87,6 +87,10 @@ relativeURLs = true
   # Order sections in menu-tree by "weight" or "title". Default to "weight"
   ordersectionsby = "weight"
 
+  # when set to true the menu-tree will always start fully expanded for all levels. 
+  # Parameter is used in the menu.html partial.
+  alwaysopen = true
+
 [outputs]
   # JSON Output is only required for the locally installed Lunr-Search-index. 
   # When you switch to an alternative Searchengeine - such as Algolia - make sure JSON is removed from the list!

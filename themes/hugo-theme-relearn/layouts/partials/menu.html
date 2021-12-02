@@ -94,7 +94,9 @@
         <ul class="topics">
           {{- $defaultOrdersectionsby := .Site.Params.ordersectionsby | default "weight" }}
           {{- $currentOrdersectionsby := .Site.Home.Params.ordersectionsby | default $defaultOrdersectionsby }}
+
           {{- $defaultAlwaysopen := .Site.Params.alwaysopen | default false }}
+
           {{- if eq $currentOrdersectionsby "title" }}
             {{- range .Site.Home.Sections.ByTitle }}
               <!-- section-tree-nav rendering is defined below -->
@@ -186,12 +188,22 @@
       </div>
     </nav>
 
-    <!--vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv-->
+    <!--vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+    vv Section-tree-navigation bar definition                                                                                 vv
+    vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+    -->
+
     {{- define "section-tree-nav" }}
+      <!-- taken from config.toml: wether visited linkes will be flagged or not -->
       {{- $showvisitedlinks := .showvisitedlinks }}
+
+      <!-- required for recursion -->
       {{- $currentNode := .currentnode }}
+
       {{- $currentFileRelPermalink := .currentnode.RelPermalink }}
+
       {{- $alwaysopen := .alwaysopen }}
+
       {{- with .sect }}
         {{- $relearnIsHiddenFrom := index ($currentNode.Scratch.Get "relearnIsHiddenFrom") .RelPermalink }}
         {{- $hidden := and $relearnIsHiddenFrom (not $.showhidden) (not (.IsAncestor $currentNode)) }}
