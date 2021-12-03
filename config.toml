@@ -16,7 +16,7 @@ relativeURLs = true
   editURL = "https://github.com/McShelby/hugo-theme-relearn/edit/main/exampleSite/content/"
 
   # Description of the site, will be used in meta information
-  description = "Documentation for Hugo Relearn Theme"
+  description = "Baron Docs"
 
   # Author of the site, will be used in meta information
   author = "René Baron"
@@ -62,9 +62,12 @@ relativeURLs = true
   # used in menu.html
   disableSeoHiddenPages = false
 
-  # Javascript and CSS cache are automatically busted when new version of site is generated.
+  # Currently the meta.html partial adds the current amount of Milliseconds to the filename to 
+  # ensure, that the file is not taken from the cache. This ensures that Javascript and CSS cache 
+  # are automatically busted when new version of site is generated.
   # Set this to true to disable this behavior (some proxies don't handle well this optimization)
-  # default = false  - have good reasons to change it to true. 
+  # default = false
+  # Have good reasons to change it to true as it might disturb proper testing and troubleshooting
   disableAssetsBusting = false 
 
   # Set this to true to disable copy-to-clipboard button for inline code.
@@ -112,7 +115,7 @@ relativeURLs = true
 
 [Languages]
   [Languages.en]
-    title = "Documentation for Hugo Relearn Theme"
+    title = "Baron Docs"
     weight = 1
 
     languageName = "English"

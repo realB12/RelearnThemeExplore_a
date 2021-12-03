@@ -1,20 +1,39 @@
 <!-- favicon
-  generates the following link
+  generates the following links
    <link rel="icon" href="./images/logo.svg?1638527129" type="image/svg+xml">
+  with the first file that can be found in the list.
+
+  Currently not clear, what that many files are required.
+
+  Asset busting adds the current amount of seconds since 1970 to the css-filename to
+  ensure that the "new" and "unique" filename overwrites already cached css files.
+  For performance reasons you might switch assetBusting in the config.toml off by
+  the following setting:
+
+      disableAssetsBusting = true
 -->
 
 {{- $assetBusting := not .Site.Params.disableAssetsBusting -}}
 
 {{- if (fileExists "/static/images/favicon.svg") -}}
-    <link rel="icon" href="{{ "/images/favicon.svg" | relURL }}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" type="image/svg+xml">
+    <link rel="icon" href="{{ "/images/favicon.svg" | relURL }}
+    {{ if $assetBusting }}
+      <!-- now.Unix = number of seconds elapsed since the Unix epoch -->
+      ?{{ now.Unix }}
+    {{ end }}" type="image/svg+xml">
+
 {{- else if (fileExists "/static/images/favicon.png") -}}
     <link rel="icon" href="{{ "/images/favicon.png" | relURL }}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" type="image/png">
+
 {{- else if (fileExists "/static/images/favicon.ico") -}}
     <link rel="icon" href="{{ "/images/favicon.ico" | relURL }}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" type="image/x-icon">
+
 {{- else if (fileExists "/static/images/logo.svg") -}}
     <link rel="icon" href="{{ "/images/logo.svg" | relURL }}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" type="image/svg+xml">
+
 {{- else if (fileExists "/static/images/logo.png") -}}
     <link rel="icon" href="{{ "/images/logo.png" | relURL }}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" type="image/png">
+
 {{- else if (fileExists "/static/images/logo.ico") -}}
     <link rel="icon" href="{{ "/images/logo.ico" | relURL }}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" type="image/x-icon">
 {{- end }}

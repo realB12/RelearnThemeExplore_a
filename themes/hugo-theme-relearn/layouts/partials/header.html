@@ -49,8 +49,36 @@
     -->
     {{ partial "favicon.html" . }}
 
+    <!-- Title
+      writes the title of the page followed by a "::" Separator and the Title of the Site.
+      This is the title that will be visible in the Browser-Tab and in the document's header.
+
+      The PAGE-Titel is set in the Page's frontmatter:
+
+          +++
+            title = "myTitle"
+          +++
+
+      The language specific Site Title comes from config.toml from the language section:
+
+        [Languages]
+          [Languages.en]
+            title = "Baron Docs"
+
+      Example:
+
+         <title>Relearn Theme for Hugo :: Documentation for Hugo Relearn Theme</title>
+    -->
     <title>{{ .Title }} {{ default "::" .Site.Params.titleSeparator }} {{ .Site.Title }}</title>
 
+    <!-- Asset Busting
+    Asset busting adds the current amount of seconds since 1970 to the css-filename to
+    ensure that the "new" and "unique" filename overwrites already cached css files.
+    For performance reasons you might switch assetBusting in the config.toml off by
+    the following setting:
+
+        disableAssetsBusting = true
+    -->
     {{- $assetBusting := not .Site.Params.disableAssetsBusting }}
 
     <link href="{{"css/nucleus.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
