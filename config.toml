@@ -59,8 +59,13 @@ relativeURLs = true
   # Can be "red", "blue", "green" or "relearn".
   themeVariant = "relearn"
 
+  # used in menu.html
   disableSeoHiddenPages = false
 
+  # Javascript and CSS cache are automatically busted when new version of site is generated.
+  # Set this to true to disable this behavior (some proxies don't handle well this optimization)
+  # default = false  - have good reasons to change it to true. 
+  disableAssetsBusting = false 
 
   # Set this to true to disable copy-to-clipboard button for inline code.
   disableInlineCopyToClipBoard = false
@@ -94,6 +99,7 @@ relativeURLs = true
 [outputs]
   # JSON Output is only required for the locally installed Lunr-Search-index. 
   # When you switch to an alternative Searchengeine - such as Algolia - make sure JSON is removed from the list!
+  # Generation breaks with an error message when an item cannot be resolved. 
   home = ["HTML", "RSS", "JSON"] 
 
 [markup]

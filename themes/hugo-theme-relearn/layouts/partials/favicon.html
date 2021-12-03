@@ -1,4 +1,10 @@
+<!-- favicon
+  generates the following link
+   <link rel="icon" href="./images/logo.svg?1638527129" type="image/svg+xml">
+-->
+
 {{- $assetBusting := not .Site.Params.disableAssetsBusting -}}
+
 {{- if (fileExists "/static/images/favicon.svg") -}}
     <link rel="icon" href="{{ "/images/favicon.svg" | relURL }}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" type="image/svg+xml">
 {{- else if (fileExists "/static/images/favicon.png") -}}

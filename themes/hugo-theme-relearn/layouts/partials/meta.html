@@ -1,23 +1,81 @@
+<!--
+  meta.html creates - as the name already indicates - all metatags for the page header
 
+  all in all this looks like:
+
+    <meta name="generator" content="Hugo 0.88.1" />
+    <meta name="generator" content="Relearn 2.9.2">
+    <link rel="alternate" type="application/rss&#43;xml" href="./index.xml" title="Documentation for Hugo Relearn Theme" />
+    <link rel="alternate" type="application/json" href="./index.json" title="Documentation for Hugo Relearn Theme" />
+    <meta name="description" content="Documentation for Hugo Relearn Theme">
+    <meta name="author" content="René Baron">
+
+  Called by the header.html, this partial-template
+
+  header.html calls
+   |
+   +- version.html: contains just the theme's version number such as "2.9.2"
+   |
+   +- page-meta.go
+
+-->
+
+   <!-- the version.html template contains just the theme's version number such as "2.9.2" -->
     <meta name="generator" content="Relearn {{ partial "version.html" }}">
-{{- partial "page-meta.go" . }}
-{{- if not (and .Title (or (ne (.Scratch.Get "relearnIsHiddenStem") true) (ne .Site.Params.disableSeoHiddenPages true) ) ) }}
-    <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
-{{- else }}
-    {{- range .AlternativeOutputFormats }}
-    {{- if ne .Name "JSON" }}
-    <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | relURL }}" title="{{ $.Site.Title | safeHTML }}" />
+
+    <!--
+      The "page-meta.go" template just delivers the page-scoped Scratchpad-variables required
+      for this templates to get the stuff (e.g. arrows for previous and next pages) properly
+      rendered. Does not render anything on itself! -->
+    {{- partial "page-meta.go" . }}
+
+
+    <!-- note that the Scratch parameters are set in the "page-meta.go" template -->
+
+    <!-- disabling SEO indexing when in the config.toml the "disableSeoHiddenPages"
+         is set to true.
+    -->
+    {{- if not (and .Title (or (ne (.Scratch.Get "relearnIsHiddenStem") true) (ne .Site.Params.disableSeoHiddenPages true) ) ) }}
+      <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+    {{- else }}
+      <!-- AlternativeOutputFormats is a HUGO internal variable that prints a list of alternative formats as specified
+           in the config.toml as:
+           [outputs]
+              home = ["HTML", "RSS", "JSON"]
+      -->
+      {{- range .AlternativeOutputFormats }}
+        <!-- JSON Output is only required internally for the lunr search-engine but not relevant for SEO -->
+        {{- if ne .Name "JSON" }}
+          <!-- generates the following output
+            <link rel="alternate" type="application/rss&#43;xml" href="./index.xml" title="Documentation for Hugo Relearn Theme" />
+            <link rel="alternate" type="application/json" href="./index.json" title="Documentation for Hugo Relearn Theme" />
+          -->
+          <link
+            rel="{{ .Rel }}"
+            type="{{ .MediaType.Type }}"
+            href="{{ .Permalink | relURL }}"
+            title="{{ $.Site.Title | safeHTML }}"
+          />
+        {{- end }}
+      {{- end }}
     {{- end }}
-    {{- end }}
-{{- end }}
+
 {{- if and (ne .Site.Params.disableSeoHiddenPages true) (ne .Site.Params.disableSearchHiddenPages true) }}
-{{- range .AlternativeOutputFormats }}
-{{- if eq .Name "JSON" }}
-    <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | relURL }}" title="{{ $.Site.Title | safeHTML }}" />
+  {{- range .AlternativeOutputFormats }}
+    {{- if eq .Name "JSON" }}
+      <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | relURL }}" title="{{ $.Site.Title | safeHTML }}" />
+    {{- end }}
+  {{- end }}
 {{- end }}
-{{- end }}
-{{- end }}
-    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}">
+
+<meta name="description" content="{{ with .Description }}
+  {{ . }}
+  {{ else }}
+    {{ with .Site.Params.description }}
+      {{ . }}
+    {{ end }}
+  {{ end }}">
+
 {{- with .Site.Params.author }}
     <meta name="author" content="{{ . }}">
 {{- end }}

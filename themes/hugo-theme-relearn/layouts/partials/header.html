@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html lang="{{ .Page.Language | default "en" }}" class="js csstransforms3d">
   <head>
-    <!-- HTML-Header Data that heads every single generated page: Single (single.html)
-         and List-pages (list.html) alike.
-         Header data from the themes/layouts folder can be overwritten by a header.html
-         in the root/layouts folder.
+    <!-- Generates the HTML-Header Data that resides at the top of  every single generated
+         page: Single (single.html) and List-pages (list.html) alike.
 
-         The Header itself constitutes from
-         |
-         +- meta.html
-         +- favicion.html
+         However note that header data from the themes/layouts folder can be overwritten by
+         a header.html in the root/layouts folder.
+
+         header.html calles
+          |
+          +- meta.html:
+          |  |
+          |  +- page-meta.go
+          |
+          +- favicion.html
 
     -->
+
+    <!-- hardcodes Characterset and Viewport information -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -19,17 +25,34 @@
       <meta> tag for the version of Hugo that generated the site.
       .Hugo.Generator outputs a complete HTML tag; e.g.
       <meta name="generator" content="Hugo 0.88.1" />
-      <meta name="generator" content="Relearn 2.9.2" />
      -->
     {{ hugo.Generator -}}
 
+    <!-- meta.html partial writes all other meta-tags as follows:
+      <meta name="generator" content="Relearn 2.9.2">
+      <link rel="alternate" type="application/rss&#43;xml" href="./index.xml" title="Documentation for Hugo Relearn Theme" />
+      <link rel="alternate" type="application/json" href="./index.json" title="Documentation for Hugo Relearn Theme" />
+      <meta name="description" content="Documentation for Hugo Relearn Theme">
+      <meta name="author" content="René Baron">
+
+      internally it calls the following partials:
+
+          +- version.html: contains just the theme's version number such as "2.9.2"
+
+          +- page-meta.go: provides a set of variables with navigational information
+    -->
     {{- partial "meta.html" . }}
 
+    <!-- favicon
+      generates the following link
+       <link rel="icon" href="./images/logo.svg?1638527129" type="image/svg+xml">
+    -->
     {{ partial "favicon.html" . }}
 
     <title>{{ .Title }} {{ default "::" .Site.Params.titleSeparator }} {{ .Site.Title }}</title>
 
     {{- $assetBusting := not .Site.Params.disableAssetsBusting }}
+
     <link href="{{"css/nucleus.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
     <link href="{{"css/fontawesome-all.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
     <link href="{{"css/featherlight.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
