@@ -99,7 +99,13 @@
 
           {{- if eq $currentOrdersectionsby "title" }}
             {{- range .Site.Home.Sections.ByTitle }}
-              <!-- section-tree-nav rendering is defined below -->
+              <!-- Calling the "section-tree-nav" templates that is defined below:
+                mind the dict-ionary that sends the following parameter-pairs to the called template:
+                - sect = . (current section)
+                - currentnode
+                - showvisitedlinks: wether already visited links shall be flagged
+                - alwaysopen: wether the tree is unfolded (true) or collapsed (falss)
+              -->
               {{- template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks "alwaysopen" $defaultAlwaysopen }}
             {{- end }}
           {{- else }}
@@ -194,20 +200,31 @@
     -->
 
     {{- define "section-tree-nav" }}
-      <!-- taken from config.toml: wether visited linkes will be flagged or not -->
+      <!-- taken from input parameter which is taken again from config.toml:
+           whether visited linkes will be flagged or not -->
       {{- $showvisitedlinks := .showvisitedlinks }}
 
-      <!-- required for recursion -->
+      <!-- input parameter required for recursion -->
       {{- $currentNode := .currentnode }}
 
+      <!-- input parameter -->
       {{- $currentFileRelPermalink := .currentnode.RelPermalink }}
 
+      <!-- alwaysopen explodes all the tree and displays all submenues in full lenght -->
       {{- $alwaysopen := .alwaysopen }}
 
+      <!-- the .sect is an input parameter and contain the actual section -->
       {{- with .sect }}
+
+        <!-- The index()-function Looks up the index(es) or key(s) of the data structure passed into it.
+
+        -->
         {{- $relearnIsHiddenFrom := index ($currentNode.Scratch.Get "relearnIsHiddenFrom") .RelPermalink }}
+
         {{- $hidden := and $relearnIsHiddenFrom (not $.showhidden) (not (.IsAncestor $currentNode)) }}
+
         {{- if $hidden }}
+          <!-- when the node is hidden: just do not render it -->
         {{- else if .IsSection }}
           {{- safeHTML .Params.head }}
           {{- $defaultOrdersectionsby := .Site.Params.ordersectionsby | default "weight" }}
@@ -223,6 +240,8 @@
                 {{- $pages = (.Pages | union .Sections) }}
               {{- end }}
               {{- $defaultAlwaysopen := .Site.Params.alwaysopen | default true }}
+
+              <!-- recursive call of this nav-rendering code template -->
               {{- if eq $currentOrdersectionsby "title" }}
                 {{- range $pages.ByTitle }}
                   {{- template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks "alwaysopen" $defaultAlwaysopen }}
@@ -233,9 +252,17 @@
                 {{- end }}
               {{- end }}</ul></li>
         {{- else }}
-          <li data-nav-id="{{.RelPermalink}}" title="{{.Title}}" class="dd-item{{if eq .RelPermalink $currentFileRelPermalink}} active{{end}}"><a href="{{.RelPermalink}}">
+          <!-- not hidden nor a section -->
+          <li
+            data-nav-id="{{.RelPermalink}}"
+            title="{{.Title}}"
+            class="dd-item{{if eq .RelPermalink $currentFileRelPermalink}} active{{end}}"
+          >
+            <a href="{{.RelPermalink}}">
               {{- partial "menu-pre.html" . }}{{ or .Params.menuTitle .LinkTitle .Title }}{{ partial "menu-post.html" . }}
-              {{- if $showvisitedlinks }}<i class="fas fa-check read-icon"></i>{{ end }}</a></li>
+              {{- if $showvisitedlinks }}<i class="fas fa-check read-icon"></i>{{ end }}
+            </a>
+          </li>
         {{- end }}
       {{- end }}
     {{- end }}

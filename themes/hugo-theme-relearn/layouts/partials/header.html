@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html lang="{{ .Page.Language | default "en" }}" class="js csstransforms3d">
   <head>
+    <!-- HTML-Header Data that heads every single generated page: Single (single.html)
+         and List-pages (list.html) alike.
+         Header data from the themes/layouts folder can be overwritten by a header.html
+         in the root/layouts folder.
+
+         The Header itself constitutes from
+         |
+         +- meta.html
+         +- favicion.html
+
+    -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- hugo.Generator is a Hugo provided built in function that writes a
+      <meta> tag for the version of Hugo that generated the site.
+      .Hugo.Generator outputs a complete HTML tag; e.g.
+      <meta name="generator" content="Hugo 0.88.1" />
+      <meta name="generator" content="Relearn 2.9.2" />
+     -->
     {{ hugo.Generator -}}
+
     {{- partial "meta.html" . }}
+
     {{ partial "favicon.html" . }}
+
     <title>{{ .Title }} {{ default "::" .Site.Params.titleSeparator }} {{ .Site.Title }}</title>
 
     {{- $assetBusting := not .Site.Params.disableAssetsBusting }}
