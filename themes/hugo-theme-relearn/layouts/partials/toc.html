@@ -1,6 +1,16 @@
-
+            <!-- Renders the table of contents (TOC) of the current page -->
             <div class="progress">
               <div class="wrapper">
-{{ .TableOfContents }}
+                <!--
+                The built-in .TableOfContents page-variable outputs a <nav id="TableOfContents"> element
+                with a child <ul>, whose child <li> elements begin with appropriate HTML headings.
+                Note that the output can be configured in the Markup settings:
+                  [markup]
+                    [markup.tableOfContents]
+                      endLevel = 3    # The heading level, inclusive, to stop render the table of contents.
+                      ordered = false # Whether or not to generate an ordered list instead of an unordered list.
+                      startLevel = 2  # The heading level, values starting at 1 (h1), to start TOC rendering
+                -->
+                {{ .TableOfContents }}
               </div>
             </div>

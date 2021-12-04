@@ -10,7 +10,9 @@ relativeURLs = true
 
 [params]
 
-  # Prefix URL to edit current page. Will display an "Edit this page" button on top right hand corner of every page.
+  # Prefix URL to edit current page. 
+  # This will display an "Edit this page" button on the top right corner of every page
+  # with exception of the homepage.
   # Useful to give opportunity to people to create merge request for your doc.
   # See the config.toml file from this documentation site to have an example.
   editURL = "https://github.com/McShelby/hugo-theme-relearn/edit/main/exampleSite/content/"
@@ -105,13 +107,21 @@ relativeURLs = true
   # Generation breaks with an error message when an item cannot be resolved. 
   home = ["HTML", "RSS", "JSON"] 
 
+
+
 [markup]
   [markup.highlight]
     style = "base16-snazzy" # choose a color theme or create your own
     guessSyntax = false     # if set to true, avoid unstyled code if no language was given but mermaid code fences will not work anymore
 
-[markup.goldmark.renderer]
-  unsafe= true
+  [markup.tableOfContents]
+    endLevel = 3       # The heading level, inclusive, to stop render the table of contents.
+    ordered = false    # Whether or not to generate an ordered list instead of an unordered list.
+    startLevel = 2     # The heading level, values starting at 1 (h1), to start TOC rendering
+
+
+  [markup.goldmark.renderer]
+     unsafe= true
 
 [Languages]
   [Languages.en]
